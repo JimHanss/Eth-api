@@ -3,15 +3,16 @@
 /**
  * Module dependencies.
  */
-require("dotenv").config();
-var app = require("../app");
+
+var app = require("./src/app");
 var debug = require("debug")("demo:server");
 var http = require("http");
 
 /**
  * Get port from environment and store in Express.
  */
-var HTTP_PORT = normalizePort(process.env.HTTP_PORT || "3000");
+
+var port = normalizePort(process.env.PORT || "8088");
 // app.set('port', port);
 
 /**
@@ -24,7 +25,7 @@ var server = http.createServer(app.callback());
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(HTTP_PORT);
+server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
 
