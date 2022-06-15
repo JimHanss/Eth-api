@@ -2,10 +2,14 @@
   "name": "eth-server",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "build": "node index.js",
+    "dev": "./node_modules/.bin/nodemon index.js",
+    "prd": "pm2 start index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
-    "@vercel/build-utils": "^4.1.0",
-    "@vercel/frameworks": "^1.0.1",
-    "@vercel/routing-utils": "^1.13.4",
     "debug": "^4.1.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
@@ -21,7 +25,6 @@
     "pug": "^2.0.3"
   },
   "devDependencies": {
-    "@vercel/node": "^2.1.0",
     "nodemon": "^1.19.1"
   }
 }
