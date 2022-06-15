@@ -8,6 +8,14 @@
     ],
     "routes": [
       {
+        "handle": "filesystem"
+    },
+    // {
+    //     "src": "/(.*)",
+    //     "status": 404,
+    //     "dest": "/welcome.html"
+    // },
+      {
         "src": "/(.*)",
         "dest": "/",
         "headers": {
