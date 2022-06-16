@@ -1,19 +1,22 @@
-const router = require('koa-router')()
+import { alchemyWeb3 } from "../utils/web3";
+const router = require("koa-router")();
 
-router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
-    title: 'Hello Koa 2!'
-  })
-})
+router.get("/", async (ctx, _next) => {
+  await ctx.render("index", {
+    title: "Hello Koa 2!",
+  });
+});
 
-router.get('/string', async (ctx, next) => {
-  ctx.body = 'koa2 string'
-})
+router.get("/getBlockNumber", async (ctx, _next) => {
+  const blockNumber = await alchemyWeb3.eth.getBlockNumber();
 
-router.get('/json', async (ctx, next) => {
+  ctx.body = blockNumber;
+});
+
+router.get("/json", async (ctx, _next) => {
   ctx.body = {
-    title: 'koa2 json'
-  }
-})
+    title: "koa2 json",
+  };
+});
 
-module.exports = router
+module.exports = router;
