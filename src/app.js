@@ -9,7 +9,7 @@ const session = require("koa-generic-session");
 const cors = require("koa2-cors");
 
 const index = require("./routes/index");
-const nft = require("./routes/nft");
+const nftDemo = require("./routes/nftDemo");
 
 // error handler
 onerror(app);
@@ -38,18 +38,27 @@ app.use(
 );
 
 //cors配置
-app.use(
-  cors({
-    origin: "http://localhost:8089", //前端origin
-    credentials: true, //允许跨域带cookie
-  })
-);
+app.use(cors());
 
 app.use(
   views(__dirname + "/views", {
     extension: "pug",
   })
 );
+
+app.use(async (ctx, next) => {
+  ctx.set("Access-Control-Allow-Origin", "*");
+  ctx.set(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild"
+  );
+  ctx.set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
+  if (ctx.method == "OPTIONS") {
+    ctx.body = 200;
+  } else {
+    await next();
+  }
+});
 
 // logger
 app.use(async (ctx, next) => {
@@ -61,7 +70,7 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods());
-app.use(nft.routes(), nft.allowedMethods());
+app.use(nftDemo.routes(), nftDemo.allowedMethods());
 
 // error-handling
 app.on("error", (err, ctx) => {
