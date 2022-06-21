@@ -23,17 +23,20 @@ router.post("/getBalances", async (ctx, next) => {
   ctx.body = balance;
 });
 
-router.post("/getBody", async (ctx, next) => {
+router.post("/getNft", async (ctx) => {
   try {
-    // console.log(JSON.parse(ctx.request.body));
-    console.log(typeof ctx.request.body);
+    const id = ctx.request.body.id;
 
-    ctx.body = ctx.request.body;
+    const response = await alchemyNftWeb3.alchemy.getNftMetadata({
+      contractAddress: NFTJson.address,
+      tokenId: id,
+    });
 
-    // console.log("1111");
-    // ctx.body = "body";
+    console.log("response:", response);
+
+    ctx.body = response?.media[0]?.raw;
   } catch (error) {
-    console.log("error", error);
+    ctx.body = error;
   }
 });
 
@@ -50,20 +53,13 @@ router.post("/safeTransferFrom", async (ctx) => {
       const address = ctx.request.body.address;
       const id = ownNfts[Math.floor(Math.random() * ownNfts.length + 1)];
 
-      const result = await contract.safeTransferFrom(
-        publicKey,
-        address,
-        id,
-        1,
-        []
-      );
+      await contract.safeTransferFrom(publicKey, address, id, 1, []);
 
-      ctx.body = result;
+      ctx.body = id;
     } else {
       ctx.body = "no nft";
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 });
