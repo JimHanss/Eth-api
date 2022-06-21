@@ -24,11 +24,17 @@ router.post("/getBalances", async (ctx, next) => {
 });
 
 router.post("/getBody", async (ctx, next) => {
-  console.log(JSON.parse(ctx.request.body));
-  // console.log(typeof ctx.request.body);
+  try {
+    // console.log(JSON.parse(ctx.request.body));
+    console.log(typeof ctx.request.body);
 
-  // ctx.body = JSON.parse(ctx.request.body);
-  ctx.body = "body";
+    ctx.body = ctx.request.body;
+
+    // console.log("1111");
+    // ctx.body = "body";
+  } catch (error) {
+    console.log("error", error);
+  }
 });
 
 router.post("/safeTransferFrom", async (ctx) => {
@@ -41,7 +47,7 @@ router.post("/safeTransferFrom", async (ctx) => {
         NFTJson.abi,
         wallet
       );
-      const address = JSON.parse(ctx.request.body).address;
+      const address = ctx.request.body.address;
       const id = ownNfts[Math.floor(Math.random() * ownNfts.length + 1)];
 
       const result = await contract.safeTransferFrom(
