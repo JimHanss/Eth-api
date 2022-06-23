@@ -10,7 +10,8 @@ const router = require("koa-router")();
 router.prefix("/nftDemo");
 
 router.get("/", function (ctx, next) {
-  ctx.body = "123";
+  console.log(ctx.request.query);
+  ctx.body = ctx.request.query.param;
 });
 
 router.post("/getBalances", async (ctx, next) => {
