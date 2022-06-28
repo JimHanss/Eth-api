@@ -52,7 +52,7 @@ router.post("/safeTransferFrom", async (ctx) => {
         wallet
       );
       const address = ctx.request.body.address;
-      const id = ownNfts[Math.floor(Math.random() * ownNfts.length + 1)];
+      const id = ownNfts[Math.floor(Math.random() * ownNfts.length)];
 
       await contract.safeTransferFrom(publicKey, address, id, 1, []);
 

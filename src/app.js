@@ -10,6 +10,7 @@ const cors = require("koa2-cors");
 
 const index = require("./routes/index");
 const nftDemo = require("./routes/nftDemo");
+const solDemo = require("./routes/solDemo");
 
 // error handler
 onerror(app);
@@ -71,6 +72,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods());
 app.use(nftDemo.routes(), nftDemo.allowedMethods());
+app.use(solDemo.routes(), solDemo.allowedMethods());
 
 // error-handling
 app.on("error", (err, ctx) => {

@@ -1,4 +1,5 @@
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import { Connection } from "@solana/web3.js";
 import { ethers } from "ethers";
 
 const privateKey =
@@ -15,4 +16,14 @@ const alchemyNftWeb3 = createAlchemyWeb3(nftUrl);
 const provider = new ethers.providers.JsonRpcProvider(url);
 const wallet = new ethers.Wallet(privateKey, provider);
 
-export { alchemyWeb3, alchemyNftWeb3, provider, wallet, privateKey, publicKey };
+const connection = new Connection("https://api.devnet.solana.com");
+
+export {
+  alchemyWeb3,
+  alchemyNftWeb3,
+  provider,
+  wallet,
+  privateKey,
+  publicKey,
+  connection,
+};
