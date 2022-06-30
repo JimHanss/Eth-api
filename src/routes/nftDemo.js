@@ -1,6 +1,6 @@
 const { ethers } = require("ethers");
 import ftJson from "../utils/contract/erc20_demo/index.json";
-import NFTJson from "../utils/contract/CP_demo/index.json";
+import NFTJson from "../utils/contract/new_demo_0630/index.json";
 import { wallet, alchemyWeb3, publicKey, alchemyNftWeb3 } from "../utils/web3";
 import _ from "lodash";
 import getNfts from "../utils/getNfts";
@@ -24,18 +24,33 @@ router.post("/getBalances", async (ctx, next) => {
   ctx.body = balance;
 });
 
+// router.post("/getNft", async (ctx) => {
+//   try {
+//     const id = ctx.request.body.id;
+
+//     const response = await alchemyNftWeb3.alchemy.getNftMetadata({
+//       contractAddress: "0x96ba5a2636fBF3ef36e54F338B1656a3450e8696",
+//       tokenId: id,
+//     });
+
+//     console.log("response:", response);
+
+//     // ctx.body = response?.media[0]?.raw;
+//     ctx.body = response;
+//   } catch (error) {
+//     ctx.body = error;
+//   }
+// });
+
 router.post("/getNft", async (ctx) => {
   try {
-    const id = ctx.request.body.id;
-
-    const response = await alchemyNftWeb3.alchemy.getNftMetadata({
-      contractAddress: NFTJson.address,
-      tokenId: id,
+    const nfts = await alchemyNftWeb3.alchemy.getNfts({
+      owner: publicKey,
+      contractAddresses: [NFTJson.address],
+      withMetadata: true,
     });
 
-    console.log("response:", response);
-
-    ctx.body = response?.media[0]?.raw;
+    ctx.body = _.map(nfts.ownedNfts, (item) => item.media[0].gateway);
   } catch (error) {
     ctx.body = error;
   }
@@ -54,9 +69,13 @@ router.post("/safeTransferFrom", async (ctx) => {
       const address = ctx.request.body.address;
       const id = ownNfts[Math.floor(Math.random() * ownNfts.length)];
 
-      await contract.safeTransferFrom(publicKey, address, id, 1, []);
+      console.log("contract", contract);
 
-      ctx.body = id;
+      console.log("1111", [publicKey, address, id]);
+      await contract.safeTransferFrom(publicKey, address, id, 1, []);
+      console.log("2222");
+
+      ctx.body = id ?? ownNfts;
     } else {
       ctx.body = "no nft";
     }

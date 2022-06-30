@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { alchemyNftWeb3, publicKey } from "./web3";
-import NFTJson from "./contract/CP_demo/index.json";
+import NFTJson from "./contract/new_demo_0630/index.json";
 
 const getNfts = async () => {
   try {
