@@ -44,8 +44,9 @@ router.post("/getBalances", async (ctx, next) => {
 
 router.post("/getNft", async (ctx) => {
   try {
+    const address = ctx.request.body.address;
     const nfts = await alchemyNftWeb3.alchemy.getNfts({
-      owner: publicKey,
+      owner: address,
       contractAddresses: [NFTJson.address],
       withMetadata: true,
     });
