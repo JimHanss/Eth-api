@@ -34,7 +34,7 @@ router.post("/getNft", async (ctx) => {
   }
 });
 
-router.post("/transfer", async (ctx, next) => {
+router.post("/safeTransferFrom", async (ctx, next) => {
   try {
     const address = ctx.request.body.address;
 
