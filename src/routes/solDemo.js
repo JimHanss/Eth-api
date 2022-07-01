@@ -16,16 +16,15 @@ router.get("/", function (ctx, next) {
 
 router.post("/getNft", async (ctx) => {
   try {
-    const nfts = await metaplex
-      .nfts()
-      .findAllByOwner(
-        new PublicKey("GcGWaaKhKuNrfjy4xiyqbHTFw46NpCv8VkyXwgBmShbL")
-      );
+    const address = new PublicKey(ctx.request.body.address);
+
+    const nfts = await metaplex.nfts().findAllByOwner(address);
 
     const nftMetadata = _.map(nfts, (item) => {
       return {
         name: item.name,
         uri: item.uri,
+        address: item.mint,
       };
     });
 

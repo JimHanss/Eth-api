@@ -55,6 +55,7 @@ router.post("/getNft", async (ctx) => {
       return {
         name: item.title,
         uri: item.media[0].gateway,
+        address: NFTJson.address,
       };
     });
   } catch (error) {
