@@ -9,7 +9,7 @@ const session = require("koa-generic-session");
 const cors = require("koa2-cors");
 
 const index = require("./routes/index");
-const nftDemo = require("./routes/nftDemo");
+const ethDemo = require("./routes/ethDemo");
 const solDemo = require("./routes/solDemo");
 
 // error handler
@@ -71,7 +71,7 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods());
-app.use(nftDemo.routes(), nftDemo.allowedMethods());
+app.use(ethDemo.routes(), ethDemo.allowedMethods());
 app.use(solDemo.routes(), solDemo.allowedMethods());
 
 // error-handling

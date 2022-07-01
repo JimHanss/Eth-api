@@ -7,7 +7,7 @@ import getNfts from "../utils/getNfts";
 
 const router = require("koa-router")();
 
-router.prefix("/nftDemo");
+router.prefix("/ethDemo");
 
 router.get("/", function (ctx, next) {
   console.log(ctx.request.query);
@@ -51,7 +51,12 @@ router.post("/getNft", async (ctx) => {
       withMetadata: true,
     });
 
-    ctx.body = _.map(nfts.ownedNfts, (item) => item.media[0].gateway);
+    ctx.body = _.map(nfts.ownedNfts, (item) => {
+      return {
+        name: item.title,
+        uri: item.media[0].gateway,
+      };
+    });
   } catch (error) {
     ctx.body = error;
   }
@@ -67,14 +72,12 @@ router.post("/safeTransferFrom", async (ctx) => {
         NFTJson.abi,
         wallet
       );
+
       const address = ctx.request.body.address;
+
       const id = ownNfts[Math.floor(Math.random() * ownNfts.length)];
 
-      console.log("contract", contract);
-
-      console.log("1111", [publicKey, address, id]);
       await contract.safeTransferFrom(publicKey, address, id, 1, []);
-      console.log("2222");
 
       ctx.body = id ?? ownNfts;
     } else {

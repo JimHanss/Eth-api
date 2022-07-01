@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@alch/alchemy-web3": "^1.4.2",
-    "@metaplex/js": "^4.12.0",
+    "@metaplex-foundation/js": "^0.11.7",
     "@solana/spl-token": "^0.2.0",
-    "@solana/web3.js": "^1.44.3",
+    "@solana/web3.js": "^1.44.0",
     "@vercel/build-utils": "^4.1.0",
     "bs58": "^5.0.0",
     "debug": "^4.1.1",
