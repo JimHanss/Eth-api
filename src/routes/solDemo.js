@@ -20,15 +20,25 @@ router.post("/getNft", async (ctx) => {
 
     const nfts = await metaplex.nfts().findAllByOwner(address);
 
-    const nftMetadata = _.map(nfts, (item) => {
+    const mints = _.map(nfts, (item) => item.mint);
+
+    const nftMetadatas = await metaplex.nfts().findAllByMintList(mints);
+
+    const metadatas = await Promise.all(
+      _.map(nftMetadatas, (item) => {
+        return item.metadataTask.run();
+      })
+    );
+
+    const nftDetails = _.map(metadatas, (item, index) => {
       return {
         name: item.name,
-        uri: item.uri,
-        address: item.mint,
+        uri: item.image,
+        address: mints[index].toString(),
       };
     });
 
-    ctx.body = nftMetadata;
+    ctx.body = nftDetails;
   } catch (error) {
     console.log("getNft", error);
   }
