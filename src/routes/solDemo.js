@@ -18,7 +18,7 @@ router.post("/getNft", async (ctx) => {
   try {
     const address = new PublicKey(ctx.request.body.address);
 
-    const nfts = await metaplex.nfts().findAllByOwner(address);
+    const nfts = await metaplex.nfts().findAllByOwner({ owner: address }).run();
 
     const mints = _.map(nfts, (item) => item.mint);
 
